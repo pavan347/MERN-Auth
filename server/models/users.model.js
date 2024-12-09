@@ -1,3 +1,4 @@
+import { default_type } from "mime";
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
@@ -32,3 +33,7 @@ const userSchema = new mongoose.Schema({
     }, 
 
 });
+
+const userModel = mongoose.models.user || mongoose.model('user', userSchema);
+
+export default userModel;
