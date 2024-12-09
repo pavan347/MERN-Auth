@@ -1,10 +1,10 @@
 import userModel from "../models/users.model.js";
 import bcrypt from "bcryptjs"
-import { jwt } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 export const register = async (req, res) => {
 
-    const { username, email, password } = res.body;
+    const { username, email, password } = req.body;
 
     if (!username || !email || !password) {
         return res.json({ success: false, message: "Missing Details" });
@@ -23,7 +23,7 @@ export const register = async (req, res) => {
         const user = new userModel({ username, email, password: hashedPassowrd })
         await user.save();
 
-        const token = jwt.sign({id: user._id}, process.env.JWT_SECERT_KEY, {expiresIn: '7d'});
+        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET_KEY, {expiresIn: '7d'});
 
         res.cookie('token' , token, {
             httpOnly: true,
@@ -41,7 +41,7 @@ export const register = async (req, res) => {
 }
 
 export const login = async (req, res)=>{
-    const { email, password} = res.body;
+    const { email, password} = req.body;
 
     if(!email || !password) {
         return res.json({success: false, message: "Email and Password are required."})
@@ -55,13 +55,13 @@ export const login = async (req, res)=>{
             return res.json({ success: false, message: "Email Invalid" });
         }
 
-        const isMatch = await bcrypt.compare(user.password, password);
+        const isMatch = await bcrypt.compare(password, user.password);
 
         if(!isMatch) {
             return res.json({ success: false, message: "Invalid Password" });
         }
 
-        const token = await jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: '7d'});
+        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET_KEY, {expiresIn: '7d'});
 
         res.cookie('token', token, {
             httpOnly: true,

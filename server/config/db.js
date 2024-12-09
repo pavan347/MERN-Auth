@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const connectDB = async ()=>{
-    await mongoose.connect(`${process.env.MONGODB_LOCAL_URI}/mern-user-auth`).then(()=>{
+    await mongoose.connect(`${process.env.MONGODB_URI}/mernauth`).then(()=>{
         console.log("Connected to Database");
     })
 }

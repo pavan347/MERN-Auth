@@ -1,4 +1,3 @@
-import { default_type } from "mime";
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
