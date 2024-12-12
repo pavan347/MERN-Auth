@@ -114,7 +114,7 @@ export const sendVerificationOtp = async ( req, res) => {
         const user = await userModel.findById(userId);
 
         if(user.isAccountVerified) {
-            res.json({success: false, message: "Account Already Verified"});
+            return res.json({success: false, message: "Account Already Verified"});
         }
 
         const otp = String(Math.floor( 100000 + Math.random() * 900000));
