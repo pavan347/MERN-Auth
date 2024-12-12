@@ -122,6 +122,8 @@ export const sendVerificationOtp = async ( req, res) => {
         user.verrifyOtp = otp;
         user.verrifyOtpExpireAt = Date.now() + 24 * 60 * 60 * 1000;
 
+        await user.save();
+
         const mailOptions = {
             from: process.env.SENDER_EMAIL,
             to: user.email,
@@ -138,7 +140,7 @@ export const sendVerificationOtp = async ( req, res) => {
     }
 }
 
-export const verifyOpt = async (req, res) => {
+export const verifyEmail = async (req, res) => {
     const {userId, otp} = req.body;
 
     if(!userId || !otp) {
@@ -147,7 +149,7 @@ export const verifyOpt = async (req, res) => {
 
     try {
 
-        const user = await userModel.findById(userID);
+        const user = await userModel.findById(userId);
 
         if(!user) {
             return res.json({success: false, message: "User not found"})
