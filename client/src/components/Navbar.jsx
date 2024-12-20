@@ -5,19 +5,28 @@ import { FaBars } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const Navbar = () => {
   const [menu, setMenu] = useState(false);
   const navigate = useNavigate();
 
-  const { isLoggedIn, backendUrl, userData, setUserData, setIsLoggedIn, setToken } =
+  const { isLoggedIn, backendUrl, userData, setUserData, setIsLoggedIn, token, setToken } =
     useContext(AppContext);
 
     const sendVerificationOtp = async()=>{
         try {
-            const {data} = await axios.post(backendUrl  + "/api/auth/send-verify-otp")
+            console.log(token);
+            const {data} = await axios.post(backendUrl  + "/api/auth/send-verify-otp",{}, { headers : { token }});
+            if(data.success) {
+                navigate("/email-verify")
+                toast.success(data.message);
+            }else{
+                toast.error(data.message);
+            }
         } catch (error) {
-            
+            toast.error(error.message);
         }
     }
 
@@ -79,7 +88,7 @@ const Navbar = () => {
                     <ul className="user-options list-none absolute hidden group-hover:block top-9 right-0 z-10 text-black bg-gray-100 text-sm rounded">
                       {!userData.isAccountVerified && (
                         <>
-                          <li className=" px-4 py-2 m-2 rounded font-medium cursor-pointer hover:bg-gray-300">
+                          <li onClick={sendVerificationOtp} className=" px-4 py-2 m-2 rounded font-medium cursor-pointer hover:bg-gray-300">
                             Verify&nbsp;Email
                           </li>
                           <hr />
