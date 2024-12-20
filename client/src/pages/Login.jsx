@@ -1,15 +1,61 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../context/AppContext";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Login = () => {
-  const [state, setState] = useState("Sign Up");
+  const navigate = useNavigate();
+
+  const { backendUrl, setIsLoggedIn, getUserData } = useContext(AppContext);
+
+  const [state, setState] = useState("Login");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const navigate = useNavigate();
+  const onSubmitHandler = async (e) => {
+    try {
+      e.preventDefault();
 
+      axios.defaults.withCredentials = true;
+
+      if (state === "Sign Up") {
+        const { data } = await axios.post(backendUrl + "/api/auth/register", {
+          name,
+          email,
+          password,
+        });
+
+        if (data.success) {
+          setIsLoggedIn(true);
+          getUserData();
+          toast.success(data.message)
+          navigate("/");
+        } else {
+          toast.error(data.message);
+        }
+      } else {
+        const { data } = await axios.post(backendUrl + "/api/auth/login", {
+          email,
+          password,
+        });
+
+        if (data.success) {
+          setIsLoggedIn(true);
+          getUserData();
+          toast.success(data.message)
+          navigate("/");
+        } else {
+          setIsLoggedIn(false);
+          toast.error(data.message);
+        }
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   return (
     <div className="flex flex-col justify-start items-center w-full h-full">
@@ -24,11 +70,11 @@ const Login = () => {
               : "Login into your account."}
           </p>
         </div>
-        <form className="">
+        <form className="" onSubmit={onSubmitHandler}>
           {state === "Sign Up" && (
             <div className="mb-3">
               <label
-                for="name"
+                htmlFor="name"
                 className="block mb-2 text-sm font-medium text-gray-900"
               >
                 Your Name
@@ -36,7 +82,7 @@ const Login = () => {
               <input
                 type="text"
                 id="name"
-                onChange={e => setName(e.target.value)}
+                onChange={(e) => setName(e.target.value)}
                 value={name}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                 placeholder="Enter your name."
@@ -46,7 +92,7 @@ const Login = () => {
           )}
           <div className="mb-3">
             <label
-              for="email"
+              htmlFor="email"
               className="block mb-2 text-sm font-medium text-gray-900"
             >
               Your email
@@ -54,7 +100,7 @@ const Login = () => {
             <input
               type="email"
               id="email"
-              onChange={e => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               value={email}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
               placeholder="name@gmail.com"
@@ -63,7 +109,7 @@ const Login = () => {
           </div>
           <div className="mb-3">
             <label
-              for="password"
+              htmlFor="password"
               className="block mb-2 text-sm font-medium text-gray-900"
             >
               Your password
@@ -71,7 +117,7 @@ const Login = () => {
             <input
               type="password"
               id="password"
-              onChange={e => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
               value={password}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               required
@@ -80,7 +126,7 @@ const Login = () => {
           {state === "Sign Up" && (
             <div className="mb-3">
               <label
-                for="confirmpassword"
+                htmlFor="confirmpassword"
                 className="block mb-2 text-sm font-medium text-gray-900"
               >
                 confirm password
@@ -88,13 +134,12 @@ const Login = () => {
               <input
                 type="password"
                 id="confirmpassword"
-                onChange={e => setConfirmPassword(e.target.value)}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 value={confirmPassword}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                required
-              />
+                required />
             </div>
-          ) }
+          )}
           <button
             type="submit"
             className="text-white bg-gradient-to-r from-indigo-500 to-indigo-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center mt-3"

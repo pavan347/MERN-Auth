@@ -3,7 +3,7 @@ import { assets } from "../assets/assets";
 import { navigation } from "../assets/data";
 import { FaBars } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [menu, setMenu] = useState(false);
@@ -29,14 +29,14 @@ const Navbar = () => {
 
                   {navigation.map((item) => {
                     return (
-                      <a
+                      <NavLink
                         key={item.href}
-                        href={item.href}
+                        to={item.href}
                         className="  px-3 py-2 text-sm font-medium text-white"
                         aria-current=""
                       >
                         {item.name}
-                      </a>
+                      </NavLink>
                     );
                   })}
                 </div>

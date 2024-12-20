@@ -15,7 +15,12 @@ const allowedOrigins = ['http://localhost:5173']
 app.use(express.json()); 
 app.use(cookieParser())
 app.use(cors({origin:allowedOrigins, credentials: true}))
-app.use(express.urlencoded({extended: true}));
+// app.use(express.urlencoded({extended: true}));
+
+app.use((req, res, next) => {
+    console.log('Received cookie:', req.cookies);
+    next();
+});
 
 app.get("/", (req, res)=> {
     res.send("API Working");
