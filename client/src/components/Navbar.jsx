@@ -12,23 +12,34 @@ const Navbar = () => {
   const [menu, setMenu] = useState(false);
   const navigate = useNavigate();
 
-  const { isLoggedIn, backendUrl, userData, setUserData, setIsLoggedIn, token, setToken } =
-    useContext(AppContext);
+  const {
+    isLoggedIn,
+    backendUrl,
+    userData,
+    setUserData,
+    setIsLoggedIn,
+    token,
+    setToken,
+  } = useContext(AppContext);
 
-    const sendVerificationOtp = async()=>{
-        try {
-            console.log(token);
-            const {data} = await axios.post(backendUrl  + "/api/auth/send-verify-otp",{}, { headers : { token }});
-            if(data.success) {
-                navigate("/email-verify")
-                toast.success(data.message);
-            }else{
-                toast.error(data.message);
-            }
-        } catch (error) {
-            toast.error(error.message);
-        }
+  const sendVerificationOtp = async () => {
+    try {
+      console.log(token);
+      const { data } = await axios.post(
+        backendUrl + "/api/auth/send-verify-otp",
+        {},
+        { headers: { token } }
+      );
+      if (data.success) {
+        navigate("/email-verify");
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
     }
+  };
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -40,17 +51,15 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-gray-800">
+      <nav className="bg-white">
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
           <div className="relative flex h-16 items-center justify-between">
             <div className="flex flex-1 items-center justify-between sm:items-stretch sm:justify-start">
               <div className="flex shrink-0 items-center">
-                <img
-                  onClick={() => navigate("/")}
-                  className="h-8 w-auto"
-                  src={assets.logo}
-                  alt="Your Company"
-                />
+                <div className="flex items-center cursor-pointer" onClick={() => navigate("/")}>
+                  <span className="text-2xl">🛡️</span>
+                  <span className="ml-2 text-xl font-bold">SecureConnect</span>
+                </div>
               </div>
               <div className="hidden sm:ml-6 sm:block">
                 <div className="flex space-x-4">
@@ -61,7 +70,7 @@ const Navbar = () => {
                       <NavLink
                         key={item.href}
                         to={item.href}
-                        className="  px-3 py-2 text-sm font-medium text-white"
+                        className="  px-3 py-2 text-sm font-medium "
                         aria-current=""
                       >
                         {item.name}
@@ -88,14 +97,20 @@ const Navbar = () => {
                     <ul className="user-options list-none absolute hidden group-hover:block top-9 right-0 z-10 text-black bg-gray-100 text-sm rounded">
                       {!userData.isAccountVerified && (
                         <>
-                          <li onClick={sendVerificationOtp} className=" px-4 py-2 m-2 rounded font-medium cursor-pointer hover:bg-gray-300">
+                          <li
+                            onClick={sendVerificationOtp}
+                            className=" px-4 py-2 m-2 rounded font-medium cursor-pointer hover:bg-gray-300"
+                          >
                             Verify&nbsp;Email
                           </li>
                           <hr />
                         </>
                       )}
 
-                      <li onClick={logout} className="px-4 py-2 m-2 rounded font-medium cursor-pointer hover:bg-gray-300">
+                      <li
+                        onClick={logout}
+                        className="px-4 py-2 m-2 rounded font-medium cursor-pointer hover:bg-gray-300"
+                      >
                         Logout
                       </li>
                     </ul>

@@ -9,6 +9,7 @@ import ResetPassword from './pages/ResetPassword'
 import Navbar from './components/Navbar'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
+import Footer from './components/Footer'
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         <Route path='/email-verify' element={<EmailVerify/>}/>
         <Route path='/reset-password' element={<ResetPassword/>}/>
       </Routes>
+      <Footer/>
     </div>
   )
 }

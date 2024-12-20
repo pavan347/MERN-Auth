@@ -67,12 +67,12 @@ const Login = () => {
 
   return (
     <div className="flex flex-col justify-start items-center w-full h-full">
-      <div className="w-[90%] md:w-[35%] mt-12">
+      <div className="w-[90%] md:w-[30%] mt-12 bg-slate-800 px-5 py-8 text-white rounded">
         <div className="heading flex flex-col items-center leading-3 mb-5 ">
           <h2 className="text-2xl font-bold text-blue-600">
             {state === "Sign Up" ? "Create Account" : "Login"}
           </h2>
-          <p className="text-gray-600 text-sm">
+          <p className="text-gray-300 text-sm">
             {state === "Sign Up"
               ? "Fill all the details and click on submit."
               : "Login into your account."}
@@ -83,7 +83,7 @@ const Login = () => {
             <div className="mb-3">
               <label
                 htmlFor="name"
-                className="block mb-2 text-sm font-medium text-gray-900"
+                className="block mb-2 text-sm font-medium text-gray-100"
               >
                 Your Name
               </label>
@@ -101,7 +101,7 @@ const Login = () => {
           <div className="mb-3">
             <label
               htmlFor="email"
-              className="block mb-2 text-sm font-medium text-gray-900"
+              className="block mb-2 text-sm font-medium text-gray-100"
             >
               Your email
             </label>
@@ -118,7 +118,7 @@ const Login = () => {
           <div className="mb-3">
             <label
               htmlFor="password"
-              className="block mb-2 text-sm font-medium text-gray-900"
+              className="block mb-2 text-sm font-medium text-gray-100"
             >
               Your password
             </label>
@@ -135,7 +135,7 @@ const Login = () => {
             <div className="mb-3">
               <label
                 htmlFor="confirmpassword"
-                className="block mb-2 text-sm font-medium text-gray-900"
+                className="block mb-2 text-sm font-medium text-gray-100"
               >
                 confirm password
               </label>
