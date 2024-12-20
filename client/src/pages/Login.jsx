@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import axios from "axios";
@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 const Login = () => {
   const navigate = useNavigate();
 
-  const { backendUrl, setIsLoggedIn, getUserData } = useContext(AppContext);
+  const { backendUrl, setIsLoggedIn, getUserData, token, setToken } = useContext(AppContext);
 
   const [state, setState] = useState("Login");
   const [name, setName] = useState("");
@@ -30,7 +30,8 @@ const Login = () => {
 
         if (data.success) {
           setIsLoggedIn(true);
-          getUserData();
+          localStorage.setItem("token", data.token);
+          setToken(data.token);
           toast.success(data.message)
           navigate("/");
         } else {
@@ -44,7 +45,8 @@ const Login = () => {
 
         if (data.success) {
           setIsLoggedIn(true);
-          getUserData();
+          localStorage.setItem("token", data.token);
+          setToken(data.token);
           toast.success(data.message)
           navigate("/");
         } else {
@@ -56,6 +58,12 @@ const Login = () => {
       toast.error(error.message);
     }
   };
+
+  useEffect(() => {
+    if (token) {
+      navigate('/')
+    }
+  }, [token])
 
   return (
     <div className="flex flex-col justify-start items-center w-full h-full">

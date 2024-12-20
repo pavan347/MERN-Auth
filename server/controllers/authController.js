@@ -26,12 +26,12 @@ export const register = async (req, res) => {
 
         const token = jwt.sign({id: user._id}, process.env.JWT_SECRET_KEY, {expiresIn: '7d'});
 
-        res.cookie('token' , token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite : process.env.NODE_ENV === "production" ? 'strict' : 'none',
-            maxAge: 7 * 24 * 60 * 60 * 1000
-        })
+        // res.cookie('token' , token, {
+        //     httpOnly: true,
+        //     secure: process.env.NODE_ENV === "production",
+        //     sameSite : process.env.NODE_ENV === "production" ? 'strict' : 'none',
+        //     maxAge: 7 * 24 * 60 * 60 * 1000
+        // })
 
         const emailOptions = {
             from: process.env.SENDER_EMAIL,
@@ -42,7 +42,7 @@ export const register = async (req, res) => {
 
         const info = await transporter.sendMail(emailOptions)
 
-        return res.json({success:true, message: "user registered successfully"});
+        return res.json({success:true, message: "user registered successfully", token});
 
     } catch (e) {
         return res.json({ success: false, message: e.message });
@@ -73,14 +73,14 @@ export const login = async (req, res)=>{
 
         const token = jwt.sign({id: user._id}, process.env.JWT_SECRET_KEY, {expiresIn: '7d'});
 
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite : process.env.NODE_ENV === "production" ? 'strict' : 'none',
-            maxAge: 7 * 24 * 60 * 60 * 1000
-        })
+        // res.cookie('token', token, {
+        //     httpOnly: true,
+        //     secure: process.env.NODE_ENV === "production",
+        //     sameSite : process.env.NODE_ENV === "production" ? 'strict' : 'none',
+        //     maxAge: 7 * 24 * 60 * 60 * 1000
+        // })
 
-        return res.json({success:true, message: "Login successfull"});
+        return res.json({success:true, message: "Login successfull", token});
         
     } catch (error) {
         return res.json({success: false, message: error.message})
