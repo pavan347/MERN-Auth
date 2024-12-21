@@ -22,7 +22,7 @@ const App = () => {
             <Sidebar/>
             <Routes>
               {/* Add routes here */}
-              <Route path="/" element={<></>} />
+              <Route path="/" element={<AdminDashboard/>} />
               <Route path="/admin-dashboard" element={<AdminDashboard/>} />
               <Route path="/all-users" element={<AllUsers/>} />
               <Route path="/log-history" element={<LogHistory/>} />

@@ -30,9 +30,9 @@ return (
             </thead>
             <tbody>
                 {users.map((user) => (
-                    <tr key={user._id} onClick={()=>handleOnClick(user)} className="hover:bg-gray-100 text-center">
+                    <tr key={user._id}  className="hover:bg-gray-100 text-center">
                         <td className="py-2 px-4 border-b border-r">{users.indexOf(user) + 1}</td>
-                        <td className="py-2 px-4 border-b border-r">{user.username}</td>
+                        <td onClick={()=>handleOnClick(user)} className="py-2 px-4 border-b border-r cursor-pointer">{user.username}</td>
                         <td className="py-2 px-4 border-b border-r">{user.email}</td>
                         <td className="py-2 px-4 border-b border-r">{user.isAccountVerified ? 'Yes' : 'No'}</td>
                         <td className="py-2 px-4 border-b border-r">{user.failedLoginAttempts}</td>
