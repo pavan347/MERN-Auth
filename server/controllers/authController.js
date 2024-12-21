@@ -220,25 +220,25 @@ export const adminLogin = async(req, res) => {
         const { email, password } = req.body;
 
         if(!email || !password) {
-            return res.json({sucess: false, message: "Missing Details"});
+            return res.json({success: false, message: "Missing Details"});
         }
 
         if(email !== process.env.ADMIN_EMAIL) {
-            return res.json({sucess: false, message: "Invalid Email"});
+            return res.json({success: false, message: "Invalid Email"});
         }
 
         const isMatch = (password === process.env.ADMIN_PASS);
 
         if(!isMatch) {
-            return res.json({sucess: false, message: "Invalid Password"});
+            return res.json({success: false, message: "Invalid Password"});
         }
 
         const token = jwt.sign({id: process.env.ADMIN_EMAIL}, process.env.JWT_SECRET_KEY, {expiresIn: '1d'});
         
-        return res.json({sucess: true, message: "Logged in Successfully", token})
+        return res.json({success: true, message: "Admin Logged in Successfully", token})
 
     } catch (error) {
-        return res.json({sucess: false, message: error.message});
+        return res.json({success: false, message: error.message});
     }
 }
 
