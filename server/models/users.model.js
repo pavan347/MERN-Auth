@@ -51,15 +51,19 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    loginLogs: [loginLogSchema], // Array of login logs
+    loginLogs: [loginLogSchema], 
     failedLoginAttempts: {
         type: Number,
-        default: 0, // Tracks consecutive failed attempts
+        default: 0, 
     },
     accountLockedUntil: {
-        type: Date, // Specifies when the lock expires
-        default: null,
+        type: Number, 
+        default: 0,
     },
+    totalFailedLoginAttempts: {
+        type: Number,
+        default: 0
+    }
 });
 
 const userModel = mongoose.models.user || mongoose.model('user', userSchema);

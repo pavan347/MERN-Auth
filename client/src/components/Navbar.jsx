@@ -23,7 +23,7 @@ const Navbar = () => {
 
   const sendVerificationOtp = async () => {
     try {
-      console.log(token);
+      // console.log(token);
       const { data } = await axios.post(
         backendUrl + "/api/auth/send-verify-otp",
         {},

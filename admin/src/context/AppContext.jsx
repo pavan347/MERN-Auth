@@ -33,7 +33,7 @@ const AppContextProvider = (props) => {
 
   const getLogHistory = async () => {
     try {
-        console.log("selectedUser: " + selectedUser);
+        // console.log("selectedUser: " + selectedUser);
     const { data } = await axios.get(
       `${backendUrl}/api/auth/get-user-login-logs/${selectedUser.email}`,
       {
@@ -41,12 +41,12 @@ const AppContextProvider = (props) => {
       }
     );
 
-    console.log(data);
+    // console.log(data);
 
       if (data.success) {
         toast.success(data.message);
         setLogHistory(data.loginLogs);
-        console.log(data.loginLogs);
+        // console.log(data.loginLogs);
       } else {
         toast.error(data.message);
       }

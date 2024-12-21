@@ -60,7 +60,7 @@ export const login = async (req, res)=>{
         platform: userAgentInfo.device.type || 'desktop', // e.g., mobile, tablet, or desktop
     };
 
-    console.log('Extracted Device Info:', deviceInfo);
+    // console.log('Extracted Device Info:', deviceInfo);
     const { email, password} = req.body;
 
     if(!email || !password) {
@@ -75,13 +75,20 @@ export const login = async (req, res)=>{
             return res.json({ success: false, message: "Email Invalid" });
         }
 
+        if (await isAccountLocked(user)) {
+            const lockTimeRemaining = (user.accountLockedUntil - Date.now()) / (1000);
+            return res.json({ success: false, message: `Account is locked. Try again in ${Math.ceil(lockTimeRemaining)} seconds.` });
+        }
+
         const isMatch = await bcrypt.compare(password, user.password);
 
         if(!isMatch) {
+            await handleFailedLogin(user);
             await logUserLogin(user._id, ipAddress, deviceInfo, false, "Invalid Password" );
             return res.json({ success: false, message: "Invalid Password" });
         }
 
+        await handleSuccessfulLogin(user);
         await logUserLogin(user._id, ipAddress, deviceInfo, true, "Login Successfull");
 
         const token = jwt.sign({id: user._id}, process.env.JWT_SECRET_KEY, {expiresIn: '7d'});
@@ -207,7 +214,7 @@ async function logUserLogin(userId, ipAddress, deviceInfo, successful, message) 
 
         user.loginLogs.push(loginLog);
         await user.save();
-        console.log('Login logged successfully!');
+        // console.log('Login logged successfully!');
         return {success: true, message: 'Login logged successfully!'}
     } catch (error) {
         console.error('Error logging login:', error.message);
@@ -253,4 +260,29 @@ export const getUserLoginLogs = async(req, res)=>{
         console.error('Error fetching login logs:', error.message);
         return res.json({success: false, message: error.message});
     }
+}
+
+async function isAccountLocked(user) {
+    if (user.accountLockedUntil && user.accountLockedUntil > Date.now()) {
+        return true; 
+    }
+    return false; 
+}
+
+async function handleFailedLogin(user) {
+    user.failedLoginAttempts += 1;
+    user.totalFailedLoginAttempts += 1;
+
+    if (user.failedLoginAttempts >= 3) {
+        user.accountLockedUntil = (Date.now() + 60 * 1000); // Lock for 1 Minute
+        user.failedLoginAttempts = 0; 
+    }
+
+    await user.save();
+} 
+
+async function handleSuccessfulLogin(user) {
+    user.failedLoginAttempts = 0;
+    user.accountLockedUntil = null;
+    await user.save();
 }

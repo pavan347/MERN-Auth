@@ -22,6 +22,11 @@ const Login = () => {
       axios.defaults.withCredentials = true;
 
       if (state === "Sign Up") {
+
+        if(password !== confirmPassword) {
+          return toast.error("Password and Confirm Password should be same.")
+        }
+
         const { data } = await axios.post(backendUrl + "/api/auth/register", {
           username: name,
           email,
