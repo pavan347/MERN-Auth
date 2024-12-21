@@ -28,7 +28,7 @@ export const getUserData = async (req, res) => {
 export const getAllUsers = async(req, res) =>{
     try {
         const users = await userModel.find({}, '-password'); // Exclude password field
-        return res.json({sucess: true, messsage: "users retrived successfully", users: users});
+        return res.json({success: true, messsage: "users retrived successfully", users: users});
     } catch (error) {
         return res.json({ success: false, message: error.message });
     }
