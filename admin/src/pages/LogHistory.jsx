@@ -14,34 +14,34 @@ const LogHistory = () => {
         </div>
         <table className="min-w-full bg-white border border-gray-200">
           <thead>
-            <tr>
-              <th className="py-2 px-4 border-b">S.No</th>
-              <th className="py-2 px-4 border-b">IP Address</th>
-              <th className="py-2 px-4 border-b">Login Time</th>
-              <th className="py-2 px-4 border-b">Browser</th>
-              <th className="py-2 px-4 border-b">Browser Version</th>
-              <th className="py-2 px-4 border-b">Device</th>
-              <th className="py-2 px-4 border-b">OS</th>
-              <th className="py-2 px-4 border-b">OS Version</th>
-              <th className="py-2 px-4 border-b">Platform</th>
-              <th className="py-2 px-4 border-b">Message</th>
-              <th className="py-2 px-4 border-b">Successful</th>
+            <tr className='text-center'>
+              <th className="py-2 px-4 border-b border-r">S.No</th>
+              <th className="py-2 px-4 border-b border-r">IP Address</th>
+              <th className="py-2 px-4 border-b border-r">Login Time</th>
+              <th className="py-2 px-4 border-b border-r">Browser</th>
+              <th className="py-2 px-4 border-b border-r">Browser Version</th>
+              <th className="py-2 px-4 border-b border-r">Device</th>
+              <th className="py-2 px-4 border-b border-r">OS</th>
+              <th className="py-2 px-4 border-b border-r">OS Version</th>
+              <th className="py-2 px-4 border-b border-r">Platform</th>
+              <th className="py-2 px-4 border-b border-r">Message</th>
+              <th className="py-2 px-4 border-b border-r">Successful</th>
             </tr>
           </thead>
           <tbody>
             {logHistory.map((log, index) => (
-              <tr key={index}>
-                <td className="py-2 px-4 border-b">{index + 1}</td>
-                <td className="py-2 px-4 border-b">{log.ipAddress}</td>
-                <td className="py-2 px-4 border-b">{new Date(log.loginTime).toLocaleString()}</td>
-                <td className="py-2 px-4 border-b">{log.deviceInfo.browser}</td>
-                <td className="py-2 px-4 border-b">{log.deviceInfo.browserVersion}</td>
-                <td className="py-2 px-4 border-b">{log.deviceInfo.device}</td>
-                <td className="py-2 px-4 border-b">{log.deviceInfo.os}</td>
-                <td className="py-2 px-4 border-b">{log.deviceInfo.osVersion}</td>
-                <td className="py-2 px-4 border-b">{log.deviceInfo.platform}</td>
-                <td className="py-2 px-4 border-b">{log.message}</td>
-                <td className="py-2 px-4 border-b">{log.successful ? 'Yes' : 'No'}</td>
+              <tr key={index} className='hover:bg-gray-300  text-center'>
+                <td className="py-2 px-4 border-b border-r">{index + 1}</td>
+                <td className="py-2 px-4 border-b border-r">{log.ipAddress}</td>
+                <td className="py-2 px-4 border-b border-r">{new Date(log.loginTime).toLocaleString()}</td>
+                <td className="py-2 px-4 border-b border-r">{log.deviceInfo.browser}</td>
+                <td className="py-2 px-4 border-b border-r">{log.deviceInfo.browserVersion}</td>
+                <td className="py-2 px-4 border-b border-r">{log.deviceInfo.device}</td>
+                <td className="py-2 px-4 border-b border-r">{log.deviceInfo.os}</td>
+                <td className="py-2 px-4 border-b border-r">{log.deviceInfo.osVersion}</td>
+                <td className="py-2 px-4 border-b border-r">{log.deviceInfo.platform}</td>
+                <td className="py-2 px-4 border-b border-r">{log.message}</td>
+                <td className="py-2 px-4 border-b border-r">{log.successful ? 'Yes' : 'No'}</td>
               </tr>
             ))}
           </tbody>
