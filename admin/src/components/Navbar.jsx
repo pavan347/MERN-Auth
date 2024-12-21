@@ -9,6 +9,12 @@ const Navbar = () => {
   const [menu, setMenu] = useState(false);
   const navigate = useNavigate();
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/');
+    window.location.reload();
+  }
+
   return (
     <nav className="bg-white border-b border-gray-300">
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -26,9 +32,9 @@ const Navbar = () => {
                 <div className="login-signup">
                   <button
                     className="relative inline-flex items-center justify-center rounded-full px-4 py-2 text-white bg-blue-700 hover:text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-900"
-                    onClick={() => navigate("/login")}
+                    onClick={() => handleLogout()}
                   >
-                    Login
+                    Logout
                   </button>
                 </div>
               {/* ) : (
