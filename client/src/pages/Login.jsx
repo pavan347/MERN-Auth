@@ -29,11 +29,12 @@ const Login = () => {
         });
 
         if (data.success) {
-          setIsLoggedIn(true);
-          localStorage.setItem("token", data.token);
-          setToken(data.token);
+          // setIsLoggedIn(true);
+          // localStorage.setItem("token", data.token);
+          // setToken(data.token);
           toast.success(data.message)
-          navigate("/");
+          setState("Login")
+          navigate("/login");
         } else {
           toast.error(data.message);
         }

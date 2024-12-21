@@ -7,7 +7,7 @@ const loginLogSchema = new mongoose.Schema({
         required: true,
     },
     deviceInfo: {
-        type: String,
+        type: Object,
         required: true,
     },
     loginTime: {
@@ -18,6 +18,10 @@ const loginLogSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
     },
+    message : {
+        type: String,
+        reuqired: true
+    }
 });
 
 // Main User Schema

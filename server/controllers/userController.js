@@ -24,3 +24,12 @@ export const getUserData = async (req, res) => {
         return res.json({ success: false, message: error.message });
     }
 }
+
+export const getAllUsers = async(req, res) =>{
+    try {
+        const users = await userModel.find({}, '-password'); // Exclude password field
+        return res.json({sucess: true, messsage: "users retrived successfully", users: users});
+    } catch (error) {
+        return res.json({ success: false, message: error.message });
+    }
+}
