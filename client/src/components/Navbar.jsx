@@ -94,7 +94,7 @@ const Navbar = () => {
                   <div className="user-icon p-3 rounded-full text-xl bg-blue-700 h-9 w-9 flex items-center justify-center text-white font-bold relative group cursor-pointer">
                     {userData.name[0].toUpperCase()}
                     <ul className="user-options list-none absolute hidden group-hover:block top-9 right-0 z-10 text-black bg-gray-100 text-sm rounded">
-                      {!userData.isAccountVerified && (
+                      {!userData.isAccountVerified ? (
                         <>
                           <li
                             onClick={sendVerificationOtp}
@@ -104,7 +104,9 @@ const Navbar = () => {
                           </li>
                           <hr />
                         </>
-                      )}
+                      ) : <li className=" px-4 py-2 m-2 rounded font-medium cursor-pointer hover:bg-gray-300">
+                          Account&nbsp;already&nbsp;Verified
+                        </li>}
 
                       <li
                         onClick={logout}
