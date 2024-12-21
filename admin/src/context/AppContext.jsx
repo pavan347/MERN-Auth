@@ -11,6 +11,8 @@ const AppContextProvider = (props) => {
     localStorage.getItem("token") ? localStorage.getItem("token") : null
   );
   const [users, setUsers] = useState([]);
+  const [logHistory, setLogHistory] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const getAllUsers = async () => {
     try {
@@ -20,7 +22,6 @@ const AppContextProvider = (props) => {
 
       if (data.success) {
         toast.success(data.message);
-        console.log(data.users);
         setUsers(data.users);
       } else {
         toast.error(data.message);
@@ -30,6 +31,30 @@ const AppContextProvider = (props) => {
     }
   };
 
+  const getLogHistory = async () => {
+    try {
+        console.log("selectedUser: " + selectedUser);
+    const { data } = await axios.get(
+      `${backendUrl}/api/auth/get-user-login-logs/${selectedUser.email}`,
+      {
+        headers: { token: token }
+      }
+    );
+
+    console.log(data);
+
+      if (data.success) {
+        toast.success(data.message);
+        setLogHistory(data.loginLogs);
+        console.log(data.loginLogs);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+}
+
   const value = {
     isLoggedIn,
     setIsLoggedIn,
@@ -37,6 +62,12 @@ const AppContextProvider = (props) => {
     setToken,
     backendUrl,
     users,
+    setUsers,
+    selectedUser,
+    setSelectedUser,
+    logHistory,
+    setLogHistory,
+    getAllUsers,
   };
 
   useEffect(() => {
@@ -45,6 +76,12 @@ const AppContextProvider = (props) => {
       getAllUsers();
     }
   }, [token]);
+
+  useEffect(() => {
+    if (selectedUser) {
+      getLogHistory();
+    }
+  }, [selectedUser]);
 
   return (
     <AppContext.Provider value={value}>{props.children}</AppContext.Provider>

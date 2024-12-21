@@ -13,6 +13,6 @@ authRouter.post("/verify-email", userAuth, verifyEmail);
 authRouter.get("/is-auth", userAuth, isAuthenticated);
 // admin routes 
 authRouter.post("/admin-login", adminLogin);
-authRouter.get("/get-user-login-logs", isAdmin, getUserLoginLogs); 
+authRouter.get("/get-user-login-logs/:email", isAdmin, getUserLoginLogs); 
 
 export default authRouter;

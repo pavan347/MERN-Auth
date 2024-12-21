@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken";
 import transporter from "../config/nodemailer.js";
 import {UAParser} from 'ua-parser-js';
+import mongoose from "mongoose";
 
 export const register = async (req, res) => {
 
@@ -244,8 +245,8 @@ export const adminLogin = async(req, res) => {
 
 export const getUserLoginLogs = async(req, res)=>{
     try {
-        const {userId} = req.body;
-        const user = await userModel.findById(userId).select('loginLogs');
+        const {email} = req.params;
+        const user = await userModel.findOne({email}).select('loginLogs');
         if (!user) throw new Error('User not found');
         return res.json({success: true, message: "User logs retrived successfully", loginLogs: user.loginLogs});
     } catch (error) {
