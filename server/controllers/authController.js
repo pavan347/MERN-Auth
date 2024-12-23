@@ -275,7 +275,7 @@ async function handleFailedLogin(user) {
 
     const mailOptions = {
         from: process.env.SENDER_EMAIL,
-        to: "mailtoayesha2004@gmail.com",
+        to: process.env.SENDER_EMAIL,
         subject: "Alert - Failed Login Attempt",
         text: `The user ${user.email} has failed ${user.failedLoginAttempts} times to Login.`,
     }
@@ -286,7 +286,7 @@ async function handleFailedLogin(user) {
         user.accountLockedUntil = (Date.now() + 60 * 1000); // Lock for 1 Minute
         const mailOptions = {
             from: process.env.SENDER_EMAIL,
-            to: "mailtoayesha2004@gmail.com",
+            to: process.env.SENDER_EMAIL,
             subject: "Alert - Account Locked",
             text: `The user ${user.email} after ${user.failedLoginAttempts} unsuccessfull attempts. This is informing that the user have been Locked Out.`,
         }
@@ -302,4 +302,28 @@ async function handleSuccessfulLogin(user) {
     user.failedLoginAttempts = 0;
     user.accountLockedUntil = null;
     await user.save();
+}
+
+export const sendMail = async (req, res) => {
+    try {
+        const { name, email, subject, message } = req.body;
+
+        if (!name || !email || !subject || !message) {
+            return res.json({ success: false, message: "Missing Details" });
+        }
+
+        const mailOptions = {
+            from: process.env.SENDER_EMAIL,
+            to: process.env.SENDER_EMAIL,
+            subject: subject,
+            text: `Name: ${name}\n\nMessage: ${message}`,
+        }
+
+        await transporter.sendMail(mailOptions);
+
+        return res.json({ success: true, message: "Mail sent successfully" });
+
+    } catch (error) {
+        return res.json({ success: false, message: error.message });
+    }
 }

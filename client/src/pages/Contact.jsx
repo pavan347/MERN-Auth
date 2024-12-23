@@ -1,7 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Mail, Phone, MapPin } from 'lucide-react';
+import axios from 'axios';
+import { AppContext } from "../context/AppContext";
+import { toast } from 'react-toastify';
 
 export default function Contact() {
+
+  const {backendUrl} = useContext(AppContext);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -9,10 +15,33 @@ export default function Contact() {
     message: '',
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission
-    // console.log('Form submitted:', formData);
+    try {
+      if(formData.name && formData.email && formData.subject && formData.message) {
+      
+        const {data} = await axios.post(backendUrl + "/api/auth/send-mail", {
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        }); 
+  
+        if(data.success){
+          toast.success(data.message);
+          setFormData({
+            name: '',
+            email: '',
+            subject: '',
+            message: '',
+          });
+        }else{
+          toast.error(data.message);
+        }
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   const handleChange = (e) => {
@@ -92,7 +121,7 @@ export default function Contact() {
                   rows={4}
                   value={formData.message}
                   onChange={handleChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-md focus:border-indigo-500 focus:ring-indigo-500"
+                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-md focus:border-indigo-500 focus:ring-indigo-500"
                   required
                 />
               </div>
