@@ -273,8 +273,25 @@ async function handleFailedLogin(user) {
     user.failedLoginAttempts += 1;
     user.totalFailedLoginAttempts += 1;
 
+    const mailOptions = {
+        from: process.env.SENDER_EMAIL,
+        to: "mailtoayesha2004@gmail.com",
+        subject: "Alert - Failed Login Attempt",
+        text: `The user ${user.email} has failed ${user.failedLoginAttempts} times to Login.`,
+    }
+
+    await transporter.sendMail(mailOptions);
+
     if (user.failedLoginAttempts >= 3) {
         user.accountLockedUntil = (Date.now() + 60 * 1000); // Lock for 1 Minute
+        const mailOptions = {
+            from: process.env.SENDER_EMAIL,
+            to: "mailtoayesha2004@gmail.com",
+            subject: "Alert - Account Locked",
+            text: `The user ${user.email} after ${user.failedLoginAttempts} unsuccessfull attempts. This is informing that the user have been Locked Out.`,
+        }
+    
+        await transporter.sendMail(mailOptions);
         user.failedLoginAttempts = 0; 
     }
 
