@@ -1,6 +1,5 @@
 # MERN - Auth
-
-This project is a MERN (MongoDB, Express, React, Node.js) stack application focused on authentication.
+This project is a MERN (MongoDB, Express, React, Node.js) stack application focused on authentication. It provides a comprehensive solution for user management, including registration, login, and email verification. The application ensures secure password encryption and uses JWT for authentication. Additionally, it features an admin panel for managing users, tracking login and logout history, monitoring failed login attempts, and implementing account lockout mechanisms to enhance security.
 
 ## Features
 
@@ -12,74 +11,6 @@ This project is a MERN (MongoDB, Express, React, Node.js) stack application focu
 - Admin panel access
 - User login and logout history
 - Failed login attempts and account lockout
-
-## Installation
-
-1. Clone the repository:
-    ```sh
-    git clone https://github.com/pavan347/MERN-Auth.git
-    ```
-
-2. Install necessary dependencies:
-    ```sh
-    cd server
-    npm install
-    ```
-
-    ```sh
-    cd ../client
-    npm install
-    ```
-
-    ```sh
-    cd ../admin
-    npm install
-    ```
-
-## Usage
-
-1. Create a `.env` file in the `server` directory with the following content:
-    ```sh
-    PORT=3000
-    MONGODB_LOCAL_URI=mongodb://localhost/yourdbname
-    JWT_SECRET_KEY=your_jwt_secret_key
-    NODE_ENV=development
-    MONGODB_URI=your_mongodb_connection_string
-
-    SMTP_USER=your_smtp_user
-    SMTP_PASS=your_smtp_password
-
-    SENDER_EMAIL=your_sender_email@example.com
-
-    ADMIN_EMAIL=admin@example.com
-    ADMIN_PASS=your_admin_password
-    ```
-
-2. Create a `.env` file in the `client` directory with the following content:
-    ```sh
-    VITE_BACKEND_URL=http://localhost:3000
-    ```
-
-3. Create a `.env` file in the `admin` directory with the following content:
-    ```sh
-    VITE_BACKEND_URL=http://localhost:3000
-    ```
-
-4. Open server, admin, and client in 3 different terminals:
-    ```sh
-    cd server
-    npm run server
-    ```
-
-    ```sh
-    cd admin
-    npm run dev
-    ```
-
-    ```sh
-    cd client
-    npm run dev
-    ```
 
 ## Contributing
 
