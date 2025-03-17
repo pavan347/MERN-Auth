@@ -21,42 +21,42 @@ Contributions are welcome! Please open an issue or submit a pull request.
 ### Client Side
 
 #### Homepage
-![Homepage](./client/public/project_images/1homepage.jpeg)
+![Homepage](./project_images/1homepage.jpeg)
 
 #### About Page
-![About Page](./client/public/project_images/2aboutpage.jpeg)
+![About Page](./project_images/2aboutpage.jpeg)
 
 #### Contact Page
-![Contact Page](./client/public/project_images/3contactpage.jpeg)
+![Contact Page](./project_images/3contactpage.jpeg)
 
 #### Register Page
-![Register Page](./client/public/project_images/4registerpage.jpeg)
+![Register Page](./project_images/4registerpage.jpeg)
 
 #### Login Page
-![Login Page](./client/public/project_images/5loginpage.jpeg)
+![Login Page](./project_images/5loginpage.jpeg)
 
 #### Login Successful
-![Login Successful](./client/public/project_images/6loginsuccessful.jpeg)
+![Login Successful](./project_images/6loginsuccessful.jpeg)
 
 #### Verify Email
-![Verify Email](./client/public/project_images/7verifyemail.jpeg)
+![Verify Email](./project_images/7verifyemail.jpeg)
 
 #### Account Verified
-![Account Verified](./client/public/project_images/8accountverified.jpeg)
+![Account Verified](./project_images/8accountverified.jpeg)
 
 ### Admin Side
 
 #### Admin Login
-![Admin Login](admin/public/project_images/1adminlogin.png)
+![Admin Login](project_images/1adminlogin.png)
 
 #### Admin Dashboard
-![Admin Dashboard](admin/public/project_images/2admindashboard.jpeg)
+![Admin Dashboard](project_images/2admindashboard.jpeg)
 
 #### All Users
-![All Users](admin/public/project_images/3allusers.png)
+![All Users](project_images/3allusers.png)
 
 #### User Logs
-![User Logs](admin/public/project_images/4userlogs.jpeg)
+![User Logs](project_images/4userlogs.jpeg)
 
 ## Contact
 
